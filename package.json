@@ -1,0 +1,33 @@
+{
+  "name": "nodejs-res",
+  "version": "1.0.0",
+  "description": "This is the first commit.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "start:dev": "nodemon server"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/punkuz/search-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/punkuz/search-app/issues"
+  },
+  "homepage": "https://github.com/punkuz/search-app#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.9.5",
+    "morgan": "^1.10.0"
+  }
+}
