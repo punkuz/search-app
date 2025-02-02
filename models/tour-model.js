@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import validator from "validator"
 
 const tourSchema = Schema(
   {
@@ -7,6 +8,9 @@ const tourSchema = Schema(
       trim: true,
       requuired: [true, "Pls enter name"],
       unique: true,
+      maxlength: [40, "A tour name must have less or equal than 40 characters"],
+      minlength: [10, "A tour name must have more or equal than 10 characters"],
+      // validate: [validator.isAlpha, "A tour name must contain only characters"]
     },
     image: String,
     rating: {
@@ -19,7 +23,14 @@ const tourSchema = Schema(
     },
     duration: Number,
     maxGroupSize: Number,
-    difficulty: String,
+    difficulty: {
+      type: String,
+      required: [true, "A tour must have a difficulty"],
+      enum: {
+        values: ["easy", "medium", "difficult"],
+        message: "Difficulty is either: easy, medium, difficult",
+      },
+    },
     ratingsAverage: Number,
     ratingsQuantity: Number,
     summary: { type: String, trim: true },
@@ -28,9 +39,11 @@ const tourSchema = Schema(
     images: [String],
     startDates: [],
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
-
+tourSchema.virtual("durationWeeks").get(function () {
+  return this.duration / 7;
+});
 const Tour = model("Tour", tourSchema);
 
 export default Tour;

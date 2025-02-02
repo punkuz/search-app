@@ -25,7 +25,10 @@ export default class SearchFilter {
       delete queryStr.q
       delete queryStr.searchField
     }
-    this.mongooseQuery = this.mongooseQuery.find({$and: [searchQuery, queryStr]});
+    // this.mongooseQuery = this.mongooseQuery.find({$and: [searchQuery, queryStr]});
+    this.mongooseQuery = this.mongooseQuery.find({
+      ...searchQuery, ...queryStr
+    })
     return this;
   }
 
