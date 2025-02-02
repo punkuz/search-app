@@ -12,10 +12,20 @@ export default class SearchFilter {
     excludedFields.forEach((el) => delete queryObj[el]);
     //build query
     let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
+    queryStr = JSON.parse(queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`));
     //search via text
-    
-    this.mongooseQuery = this.mongooseQuery.find(JSON.parse(queryStr));
+    let searchQuery = {}
+    if(queryStr.searchField && queryStr.q){
+      let searchTerm = queryStr.q || ""
+      searchQuery[queryStr.searchField] = {
+        $regex: searchTerm,
+        $options: "i"
+      }
+      //delete searchField and q(searchterm)
+      delete queryStr.q
+      delete queryStr.searchField
+    }
+    this.mongooseQuery = this.mongooseQuery.find({$and: [searchQuery, queryStr]});
     return this;
   }
 

@@ -28,6 +28,7 @@ export const getAllTours = async (req, res, next) => {
       .sort()
       .fields()
       .paginate();
+      
     const tours = await searchQuery.mongooseQuery;
 
     //send response
