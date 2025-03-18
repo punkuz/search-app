@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_PASSWORD=
+      - DB_STRING=
+      - JWT_SECRET=
+      - JWT_EXPIRES_IN=
+      - JWT_COOKIE_EXPIRES_IN=
+    container_name: some_name
